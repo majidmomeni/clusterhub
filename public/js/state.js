@@ -1,4 +1,4 @@
-class StateManager {
+class StateManager extends EventTarget {
 
   #data = {};
 
@@ -12,6 +12,8 @@ class StateManager {
       date: Date.now(),
       posts: {}
     };
+
+    this.dispatchEvent(new Event('statechange'));
 
   }
 
