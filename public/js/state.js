@@ -1,5 +1,6 @@
 class StateManager extends EventTarget {
 
+  #selectedHub = null;
   #data = {};
 
   addHub(name) {
@@ -13,7 +14,7 @@ class StateManager extends EventTarget {
       posts: {}
     };
 
-    this.dispatchEvent(new Event('statechange'));
+    this.dispatchEvent(new Event('hubschange'));
 
   }
 
@@ -23,6 +24,26 @@ class StateManager extends EventTarget {
     .sort((a, b) => b.date - a.date)
     .map(hub => ({ id: hub.id, name: hub.name, date: hub.date }));
 
+  }
+
+  selectHub(id) {
+
+    this.#selectedHub = id;
+
+    this.dispatchEvent(new Event('hubselectionchange'));
+
+  }
+
+  get selectedHub() {
+
+    return this.#selectedHub;
+
+  }
+
+  getHub(id) {
+
+    return this.#data[id];
+    
   }
 
   static generateId() {
