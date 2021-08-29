@@ -1,5 +1,13 @@
 class StateManager extends EventTarget {
 
+  constructor() {
+
+    super();
+
+    this.addEventListener('statechange', () => this.save());
+
+  }
+
   #selectedHub = null;
   #data = {};
 
@@ -15,6 +23,7 @@ class StateManager extends EventTarget {
     };
 
     this.dispatchEvent(new Event('hubschange'));
+    this.dispatchEvent(new Event('statechange'));
 
   }
 
@@ -43,7 +52,7 @@ class StateManager extends EventTarget {
   getHub(id) {
 
     return this.#data[id];
-    
+
   }
 
   static generateId() {
@@ -55,6 +64,30 @@ class StateManager extends EventTarget {
       id += charset[Math.floor(Math.random() * charset.length)];
 
     return id;
+
+  }
+
+  save() {
+
+    localStorage.setItem('ch-state', JSON.stringify(this.#data));
+
+  }
+
+  load() {
+
+    const stored = localStorage.getItem('ch-state');
+
+    try {
+
+      this.#data = JSON.parse(stored) || {};
+      this.dispatchEvent(new Event('stateloaded'));
+
+    }
+    catch (error) {
+
+      console.error(error);
+
+    }
 
   }
 

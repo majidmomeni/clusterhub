@@ -1,6 +1,6 @@
 const state = new StateManager();
 
-state.addEventListener('hubschange', () => {
+function updateHubsMenu() {
 
   const menu = document.querySelector('main nav ul');
   const hubs = state.getHubsList();
@@ -20,7 +20,9 @@ state.addEventListener('hubschange', () => {
 
   }
 
-});
+}
+
+state.addEventListener('hubschange', updateHubsMenu);
 
 state.addEventListener('hubselectionchange', () => {
 
@@ -36,3 +38,7 @@ state.addEventListener('hubselectionchange', () => {
   }
 
 });
+
+state.addEventListener('stateloaded', updateHubsMenu);
+
+window.addEventListener('load', () => state.load());
