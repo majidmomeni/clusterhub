@@ -90,6 +90,8 @@ main .left .navbar{
   flex-direction: column;
   border-radius: 5px;
   box-shadow: 0 3px 20px var(--color-shadow);
+  position: sticky;
+  top: 50px;
 }
 
 .new-button{
@@ -108,6 +110,12 @@ main .left .navbar{
 .new-button:hover{
   color: var(--color-accent);
   border-color: var(--color-accent);
+}
+
+nav {
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
 }
 
 nav ul{
